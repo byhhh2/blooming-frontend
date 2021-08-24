@@ -1,21 +1,150 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import ProfileChart from './ProfileChart';
+
+const _Tab = createMaterialTopTabNavigator();
+
 const Profile = () => {
   return (
-    <View style={styles.container}>
-      <View style={styles.graphView}>
-        <Text>그래프</Text>
-      </View>
-      <View style={styles.stateDiagnosisView}>
-        <View style={styles.stateDiagnosisHeader}>
-          <Text style={styles.headerText}>7월 24일 감정 상태 진단</Text>
-        </View>
-        <View style={styles.contentView}>
-          <Text style={styles.contentText}>감정 진단 내용</Text>
-        </View>
-      </View>
-    </View>
+    <_Tab.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: 'black',
+      }}
+      tabBarOptions={{
+        pressColor: 'white',
+        style: {
+          backgroundColor: 'white',
+        },
+        indicatorStyle: {
+          backgroundColor: 'black',
+        },
+        activeTintColor: '#000',
+        inactiveTintColor: '#d1cece',
+        scrollEnabled: true,
+      }}>
+      <_Tab.Screen
+        name="1월"
+        component={ProfileChart}
+        options={{
+          title: '1월',
+          tabBarLabelStyle: {
+            fontFamily: 'GmarketSansTTFMedium',
+          },
+        }}
+      />
+      <_Tab.Screen
+        name="2월"
+        component={ProfileChart}
+        options={{
+          title: '2월',
+          tabBarLabelStyle: {
+            fontFamily: 'GmarketSansTTFMedium',
+          },
+        }}
+      />
+      <_Tab.Screen
+        name="3월"
+        component={ProfileChart}
+        options={{
+          title: '3월',
+          tabBarLabelStyle: {
+            fontFamily: 'GmarketSansTTFMedium',
+          },
+        }}
+      />
+      <_Tab.Screen
+        name="4월"
+        component={ProfileChart}
+        options={{
+          title: '4월',
+          tabBarLabelStyle: {
+            fontFamily: 'GmarketSansTTFMedium',
+          },
+        }}
+      />
+      <_Tab.Screen
+        name="5월"
+        component={ProfileChart}
+        options={{
+          title: '5월',
+          tabBarLabelStyle: {
+            fontFamily: 'GmarketSansTTFMedium',
+          },
+        }}
+      />
+      <_Tab.Screen
+        name="6월"
+        component={ProfileChart}
+        options={{
+          title: '6월',
+          tabBarLabelStyle: {
+            fontFamily: 'GmarketSansTTFMedium',
+          },
+        }}
+      />
+      <_Tab.Screen
+        name="7월"
+        component={ProfileChart}
+        options={{
+          title: '7월',
+          tabBarLabelStyle: {
+            fontFamily: 'GmarketSansTTFMedium',
+          },
+        }}
+      />
+      <_Tab.Screen
+        name="8월"
+        component={ProfileChart}
+        options={{
+          title: '8월',
+          tabBarLabelStyle: {
+            fontFamily: 'GmarketSansTTFMedium',
+          },
+        }}
+      />
+      <_Tab.Screen
+        name="9월"
+        component={ProfileChart}
+        options={{
+          title: '9월',
+          tabBarLabelStyle: {
+            fontFamily: 'GmarketSansTTFMedium',
+          },
+        }}
+      />
+      <_Tab.Screen
+        name="10월"
+        component={ProfileChart}
+        options={{
+          title: '10월',
+          tabBarLabelStyle: {
+            fontFamily: 'GmarketSansTTFMedium',
+          },
+        }}
+      />
+      <_Tab.Screen
+        name="11월"
+        component={ProfileChart}
+        options={{
+          title: '11월',
+          tabBarLabelStyle: {
+            fontFamily: 'GmarketSansTTFMedium',
+          },
+        }}
+      />
+      <_Tab.Screen
+        name="12월"
+        component={ProfileChart}
+        options={{
+          title: '12월',
+          tabBarLabelStyle: {
+            fontFamily: 'GmarketSansTTFMedium',
+          },
+        }}
+      />
+    </_Tab.Navigator>
   );
 };
 

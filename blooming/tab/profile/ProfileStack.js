@@ -19,7 +19,9 @@ const ProfileStack = () => {
           title: '사용자',
           headerTitleStyle: {
             fontFamily: 'GmarketSansTTFMedium',
-            fontSize: 15,
+            // fontSize: 15,
+            // fontWeight: null,
+            fontWeight: 'normal',
           },
           headerTitleAlign: 'center',
         })}
