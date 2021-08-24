@@ -10,23 +10,25 @@ import {
 } from 'react-native-chart-kit';
 
 const data = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+  labels: ['J', 'F', 'M', 'A', 'M', 'J'],
   datasets: [
     {
       data: [20, 45, 28, 80, 99, 43],
-      color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+      color: (opacity = 1) => '#22195D', // optional
       strokeWidth: 2, // optional
     },
   ],
-  legend: ['Rainy Days'], // optional
+  legend: [], // optional
 };
 
+//rgba(134, 65, 244, ${opacity})
+
 const chartConfig = {
-  backgroundGradientFrom: '#1E2923',
+  backgroundGradientFrom: 'white',
   backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: '#08130D',
+  backgroundGradientTo: 'white',
   backgroundGradientToOpacity: 0.5,
-  color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+  color: (opacity = 1) => '#4148A5',
   strokeWidth: 2, // optional, default 3
   barPercentage: 0.5,
   useShadowColorFromDataset: false, // optional
@@ -36,14 +38,18 @@ const ProfileChart = () => {
   return (
     <View style={styles.container}>
       <View style={styles.graphView}>
-        {/* <LineChart
+        <Text style={styles.graphText}>일기 쓴 일 수 : 51일</Text>
+        <LineChart
           data={data}
-          width={200}
+          width={350}
           height={256}
           verticalLabelRotation={30}
           chartConfig={chartConfig}
+          withInnerLines={false}
+          withOuterLines={false}
+          withHorizontalLabels={false}
           bezier
-        /> */}
+        />
       </View>
       <View style={styles.stateDiagnosisView}>
         <View style={styles.stateDiagnosisHeader}>
@@ -64,6 +70,15 @@ const styles = StyleSheet.create({
   },
   graphView: {
     flex: 1.5,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    //backgroundColor: 'red',
+  },
+  graphText: {
+    alignSelf: 'center',
+    fontFamily: 'GmarketSansTTFMedium',
+    fontSize: 20,
+    paddingTop: 20,
   },
   stateDiagnosisView: {
     flex: 1,
@@ -85,6 +100,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 25,
     fontFamily: 'GmarketSansTTFMedium',
+    color: '#0F143A',
   },
   contentView: {
     marginTop: 30,
@@ -92,6 +108,7 @@ const styles = StyleSheet.create({
   contentText: {
     fontSize: 17,
     fontFamily: 'GmarketSansTTFMedium',
+    color: '#0F143A',
   },
 });
 
