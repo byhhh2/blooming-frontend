@@ -19,7 +19,6 @@ const Tab = createBottomTabNavigator();
 
 const TabNav = () => {
   return (
-
     <Tab.Navigator screenOptions={{headerShown: false}}>
       <Tab.Screen
         name="HomeStack"
