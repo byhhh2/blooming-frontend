@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Text, View, StyleSheet, BackHandler, Alert} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
 
 import AddDiary from './add_diary/AddDiary';
 import Home from './home/Home';
@@ -12,14 +11,12 @@ const Tab = createBottomTabNavigator();
 
 const TabNav = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Profile" component={Profile} />
-        <Tab.Screen name="SharedDiary" component={SharedDiary} />
-        <Tab.Screen name="AddDiary" component={AddDiary} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="SharedDiary" component={SharedDiary} />
+      <Tab.Screen name="AddDiary" component={AddDiary} />
+    </Tab.Navigator>
   );
 };
 
