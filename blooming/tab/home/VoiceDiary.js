@@ -82,7 +82,7 @@ const VoiceDiary = ({TabNavigation}) => {
           )}
         </View>
         <View style={styles.playBarView}>
-          <Text>play bar</Text>
+          {/* <Text>play bar</Text> */}
           <View>
             <Player reputation={50} current={current} />
           </View>
@@ -103,12 +103,9 @@ const Player = ({reputation, current}) => {
     // setInterval(function () {
     //   console.log('하이');
     // }, 5000);
-    // setInterval(() => {
-    //   sound.getCurrentTime(seconds => setCurrent(seconds));
-    //   console.log(current);
-    // }, 3000);
-    // console.log(current);
-  }, [current]);
+    // setInterval(() => t + 3, 3000);
+    // console.log(setInterval(() => t + 3, 3000));
+  }, [t]);
 
   return (
     <View style={styles.playerBar}>

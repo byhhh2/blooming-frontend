@@ -3,28 +3,29 @@ import {StyleSheet, Text, View} from 'react-native';
 
 const Profile = () => {
   return (
-    <View>
-      <Text>Profile</Text>
+    <View style={styles.container}>
+      <View style={styles.graphView}>
+        <Text>그래프</Text>
+      </View>
+      <View style={styles.stateDiagnosisView}>
+        <Text>감정진단</Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  graphView: {
+    flex: 1.5,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  stateDiagnosisView: {
+    flex: 1,
+    //borderTopLeftRadius: 20,
+    //border: 1,
   },
 });
 
