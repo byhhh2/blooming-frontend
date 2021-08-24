@@ -1,9 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
+import axios from 'axios';
+
 const Content = () => {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [like, setLike] = useState([]);
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.leftBtn}>
