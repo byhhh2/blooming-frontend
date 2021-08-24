@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Text, View, StyleSheet, BackHandler, Alert} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+
 
 import AddDiary from './add_diary/AddDiary';
 import Home from './home/Home';
@@ -15,7 +15,6 @@ const Tab = createBottomTabNavigator();
 
 const TabNav = () => {
   return (
-    <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen
           name="Home"
@@ -82,7 +81,6 @@ const TabNav = () => {
           }}
         />
       </Tab.Navigator>
-    </NavigationContainer>
   );
 };
 
