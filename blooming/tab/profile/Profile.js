@@ -8,7 +8,12 @@ const Profile = () => {
         <Text>그래프</Text>
       </View>
       <View style={styles.stateDiagnosisView}>
-        <Text>감정진단</Text>
+        <View style={styles.stateDiagnosisHeader}>
+          <Text style={styles.headerText}>7월 24일 감정 상태 진단</Text>
+        </View>
+        <View style={styles.contentView}>
+          <Text style={styles.contentText}>감정 진단 내용</Text>
+        </View>
       </View>
     </View>
   );
@@ -24,8 +29,31 @@ const styles = StyleSheet.create({
   },
   stateDiagnosisView: {
     flex: 1,
-    //borderTopLeftRadius: 20,
-    //border: 1,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    borderWidth: 1,
+    elevation: 4,
+    borderColor: 'white',
+    paddingLeft: 20,
+  },
+  stateDiagnosisHeader: {
+    borderBottomWidth: 1,
+    width: '90%',
+    alignItems: 'center',
+    borderColor: 'gray',
+    padding: 10,
+    paddingTop: 50,
+  },
+  headerText: {
+    fontSize: 25,
+    fontFamily: 'GmarketSansTTFMedium',
+  },
+  contentView: {
+    marginTop: 30,
+  },
+  contentText: {
+    fontSize: 17,
+    fontFamily: 'GmarketSansTTFMedium',
   },
 });
 
