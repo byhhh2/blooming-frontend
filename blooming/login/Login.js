@@ -5,6 +5,7 @@ import {
   View,
   ImageBackground,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 
 const Login = props => {
@@ -13,33 +14,57 @@ const Login = props => {
       <ImageBackground
         source={require(`../images/background.png`)}
         style={{width: '100%', height: '100%'}}>
-        <Text>home</Text>
-        <TouchableOpacity
-          style={{width: '100%', backgroundColor: 'white'}}
-          onPress={() => props.navigation.navigate('TabNav')}>
-          <Text>넘어가는 버튼이여요~</Text>
-        </TouchableOpacity>
+        <View
+          style={{
+            height: '43%',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Text style={{color: 'white', fontSize: 25, fontWeight: 'bold'}}>
+            Blooming
+          </Text>
+        </View>
+        <View style={{height: '57%', alignItems: 'center'}}>
+          <TextInput
+            style={styles.textInput}
+            placeholder={'아이디를 입력하세요.'}
+            placeholderTextColor="white"
+          />
+          <TextInput
+            style={styles.textInput}
+            placeholder={'비밀번호를 입력하세요.'}
+            placeholderTextColor="white"
+          />
+          <TouchableOpacity
+            style={styles.loginBtn}
+            onPress={() => props.navigation.navigate('TabNav')}>
+            <Text>로그인</Text>
+          </TouchableOpacity>
+        </View>
       </ImageBackground>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  textInput: {
+    width: '70%',
+    height: 50,
+    //backgroundColor: 'orange',
+    borderBottomColor: 'lightgray',
+    borderBottomWidth: 1,
+    paddingLeft: '2%',
+    paddingRight: '2%',
+    marginBottom: '5%',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  loginBtn: {
+    width: '70%',
+    height: 40,
+    marginTop: '5%',
+    borderRadius: 15,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
