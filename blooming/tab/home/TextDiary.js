@@ -6,6 +6,7 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from 'react-native';
+import CalendarStrip from 'react-native-calendar-strip';
 
 import {useNavigation} from '@react-navigation/native';
 
@@ -17,7 +18,19 @@ const TextDiary = () => {
   return (
     <View style={styles.container}>
       <View style={styles.calenderView}>
-        <Text>캘린더</Text>
+        <CalendarStrip
+          scrollable
+          style={{
+            height: 170,
+            paddingTop: 20,
+            paddingBottom: 30,
+          }}
+          calendarColor={'white'}
+          calendarHeaderStyle={{color: 'black'}}
+          dateNumberStyle={{color: 'black'}}
+          dateNameStyle={{color: '#AD86E3'}}
+          iconContainer={{flex: 0.1}}
+        />
       </View>
       <View style={styles.contentView}>
         <View style={styles.content}>

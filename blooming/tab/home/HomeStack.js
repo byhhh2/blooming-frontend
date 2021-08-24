@@ -33,11 +33,12 @@ const HomeStack = ({TabNavigation}) => {
         // component={VoiceDiary}
         options={({navigation}) => ({
           title: '200824의 일기',
-          //   headerStyle: {
-          //     //backgroundColor: 'transparent',
-          //   },
+          headerStyle: {
+            //backgroundColor: 'transparent',
+          },
           headerTitleStyle: {
-            fontFamily: 'GmarketSansTTFMedium',
+            //alignSelf: 'center',
+            fontFamily: 'GmarketSansTTFBold',
           },
           headerTintColor: 'white',
           headerTransparent: true,
