@@ -7,6 +7,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import Home from './Home';
 import VoiceDiary from './VoiceDiary';
+import TextDiary from './TextDiary';
 
 const Stack = createNativeStackNavigator();
 
@@ -62,6 +63,41 @@ const HomeStack = ({TabNavigation}) => {
         })}>
         {() => <VoiceDiary TabNavigation={TabNavigation} />}
       </Stack.Screen>
+      <Stack.Screen
+        name="TextDiary"
+        component={TextDiary}
+        // options={{headerShown: false}}
+        options={({navigation}) => ({
+          title: '200824의 일기',
+          //   headerStyle: {
+          //     //backgroundColor: 'transparent',
+          //   },
+          headerTitleStyle: {
+            fontFamily: 'GmarketSansTTFMedium',
+          },
+          //headerTintColor: 'white',
+          //headerTransparent: true,
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Feather
+                name={'chevron-left'}
+                size={20}
+                style={{color: 'black'}}
+              />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <TouchableOpacity>
+              <AntDesign
+                name={'folderopen'}
+                size={20}
+                style={{color: 'black'}}
+              />
+            </TouchableOpacity>
+          ),
+        })}
+      />
     </Stack.Navigator>
   );
 };

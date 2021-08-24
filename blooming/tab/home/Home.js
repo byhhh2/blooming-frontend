@@ -15,8 +15,16 @@ import {useNavigation} from '@react-navigation/native';
 
 const Home = () => {
   const date = new Date();
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.navigate('TextDiary')}>
+        <Text>text diary</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('VoiceDiary')}>
+        <Text>Voice diary</Text>
+      </TouchableOpacity>
       <ImageBackground
         source={require(`../../images/background.png`)}
         style={{width: '100%', height: '100%'}}>
