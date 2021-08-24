@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,22 +6,59 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from 'react-native';
-
+import axios from 'axios';
 import CalendarPicker from 'react-native-calendar-picker';
-
-import VoiceDiary from './VoiceDiary';
 
 import {useNavigation} from '@react-navigation/native';
 
 const Home = () => {
   const date = new Date();
+  const [DATA, setDATA] = useState([]);
+  const [DIARY, setDIARY] = useState([]);
   const navigation = useNavigation();
-
+  const getDiaryList = () => {
+    let config = {
+      headers: {
+        Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
+      },
+      params: {
+        created_at__gte: '2020-12-30',
+        created_at__lte: '2021-08-27',
+      },
+    };
+    axios
+      .get(`${axios.defaults.baseURL}/diary/`, config)
+      .then(response => {
+        //console.log(response.data.results);
+        setDATA(response.data.results);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  const onDateChange = (date, type) => {
+    let tmp = new Date();
+    let tmp_diary = [];
+    tmp = date;
+    tmp = tmp.toISOString().slice(0, 10);
+    setDIARY(
+      DATA.filter(x => {
+        return x.created_at === tmp;
+      }),
+    );
+    if (DIARY[0] !== undefined) {
+      tmp_diary = DIARY[0];
+      navigation.navigate('TextDiary', {
+        diaryInfo: tmp_diary,
+      });
+      setDIARY([]);
+    }
+  };
+  useEffect(() => {
+    getDiaryList();
+  }, []);
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('TextDiary')}>
-        <Text>text diary</Text>
-      </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('VoiceDiary')}>
         <Text>Voice diary</Text>
       </TouchableOpacity>
@@ -29,7 +66,12 @@ const Home = () => {
         source={require(`../../images/background.png`)}
         style={{width: '100%', height: '100%'}}>
         <View style={styles.dateView}>
-          <Text style={{fontSize: 16, color: 'white'}}>
+          <Text
+            style={{
+              fontSize: 16,
+              color: 'white',
+              fontFamily: 'GmarketSansTTFMedium',
+            }}>
             {`${date.getFullYear()}년 ${
               date.getMonth() + 1
             }월 ${date.getDate()}일`}
@@ -45,14 +87,29 @@ const Home = () => {
               justifyContent: 'space-between',
               marginTop: '1%',
             }}>
-            <Text style={{color: 'white', fontSize: 12}}>우울</Text>
-            <Text style={{color: 'white', fontSize: 12}}>행복</Text>
+            <Text
+              style={{
+                color: 'white',
+                fontSize: 12,
+                fontFamily: 'GmarketSansTTFMedium',
+              }}>
+              우울
+            </Text>
+            <Text
+              style={{
+                color: 'white',
+                fontSize: 12,
+                fontFamily: 'GmarketSansTTFMedium',
+              }}>
+              행복
+            </Text>
           </View>
         </View>
         <View style={styles.calendarBack}>
           <CalendarPicker
             nextTitle=">"
             previousTitle="<"
+            onDateChange={onDateChange}
             nextTitleStyle={{fontSize: 30}}
             previousTitleStyle={{fontSize: 30}}
             todayBackgroundColor={'#AD86E3'}
@@ -109,7 +166,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   emotionTitle: {
-    fontWeight: 'bold',
+    fontFamily: 'GmarketSansTTFBold',
     fontSize: 22,
     marginTop: '1%',
     color: 'white',
