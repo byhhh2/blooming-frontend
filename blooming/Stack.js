@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import TabNav from './tab/TabNav';
 import Login from './login/Login';
+import SignUp from './login/SignUp';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,6 +13,11 @@ const StackNavi = () => {
       <Stack.Screen
         name="Login"
         component={Login}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
         options={{headerShown: false}}
       />
       <Stack.Screen
