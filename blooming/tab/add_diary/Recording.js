@@ -9,14 +9,30 @@ import {
   PermissionsAndroid,
   Platform,
 } from 'react-native';
-import AudioRecorderPlayer from 'react-native-audio-recorder-player';
+import AudioRecorderPlayer, {
+  AVEncoderAudioQualityIOSType,
+  AVEncodingOption,
+  AudioEncoderAndroidType,
+  AudioSet,
+  AudioSourceAndroidType,
+  PlayBackType,
+  RecordBackType,
+} from 'react-native-audio-recorder-player';
 
 const audioRecorderPlayer = new AudioRecorderPlayer();
 
 class Recording extends Component {
   constructor(props) {
     super(props);
-    this.state = {isRecording: false, recordSecs: 0, recordTime: 0};
+    this.state = {
+      isRecording: false,
+      recordSecs: 0,
+      recordTime: 0,
+      currentDurationSec: 0,
+      currentPositionSec: 0,
+      playTime: 0,
+      duration: 0,
+    };
   }
   onStartRecord = async () => {
     if (Platform.OS === 'android') {
@@ -47,24 +63,75 @@ class Recording extends Component {
         return;
       }
     }
+
+    const path = Platform.select({
+      android: 'file:////', // should give extra dir name in android. Won't grant permission to the first level of dir.
+    });
+    const audioSet = {
+      AudioEncoderAndroid: AudioEncoderAndroidType.AAC,
+      AudioSourceAndroid: AudioSourceAndroidType.MIC,
+      AVEncoderAudioQualityKeyIOS: AVEncoderAudioQualityIOSType.high,
+      AVNumberOfChannelsKeyIOS: 2,
+      AVFormatIDKeyIOS: AVEncodingOption.aac,
+    };
+    const meteringEnabled = false;
+
+    let uri;
+
+    try {
+      uri = await audioRecorderPlayer.startRecorder(undefined, audioSet);
+    } catch (e) {
+      console.log('ERR audioRecorderPlayer.startRecorder: ', e);
+    }
+    audioRecorderPlayer.addRecordBackListener(e => {
+      this.setState(state => ({
+        ...state,
+        recordSecs: e.current_position,
+        recordTime: audioRecorderPlayer.mmssss(Math.floor(e.current_position)),
+      }));
+      return;
+    });
+    console.log('uri: ', uri);
   };
 
   onStopRecord = async () => {
-    const result = await this.audioRecorderPlayer.stopRecorder();
-    this.audioRecorderPlayer.removeRecordBackListener();
+    const result = await audioRecorderPlayer.stopRecorder();
+    audioRecorderPlayer.removeRecordBackListener();
     this.setState({
       recordSecs: 0,
     });
     console.log(result);
   };
+  onStartPlay = async () => {
+    console.log('onStartPlay');
+    //? Custom path
+    // const msg = await this.audioRecorderPlayer.startPlayer(this.path);
 
+    //? Default path
+    const msg = await audioRecorderPlayer.startPlayer();
+    const volume = await audioRecorderPlayer.setVolume(1.0);
+    console.log(`file: ${msg}`, `volume: ${volume}`);
+
+    audioRecorderPlayer.addPlayBackListener((e: PlayBackType) => {
+      this.setState({
+        currentPositionSec: e.currentPosition,
+        currentDurationSec: e.duration,
+        playTime: audioRecorderPlayer.mmssss(Math.floor(e.currentPosition)),
+        duration: audioRecorderPlayer.mmssss(Math.floor(e.duration)),
+      });
+    });
+  };
+  onStopPlay = async () => {
+    console.log('onStopPlay');
+    audioRecorderPlayer.stopPlayer();
+    audioRecorderPlayer.removePlayBackListener();
+  };
   Recording() {
-    if (this.state.isRecording === true) {
+    if (!this.state.isRecording) {
       this.onStartRecord();
-    }
-    /*else {
+    } else {
       this.onStopRecord();
-    }*/
+    }
   }
   render() {
     return (
@@ -95,7 +162,12 @@ class Recording extends Component {
             </TouchableOpacity>
           </ImageBackground>
           <View>
-            <Text style={{color: 'white'}}>음성 바</Text>
+            <TouchableOpacity onPress={() => this.onStartPlay()}>
+              <Text style={{color: 'white'}}>음성 바</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.onStopPlay()}>
+              <Text style={{color: 'white'}}>음성 바</Text>
+            </TouchableOpacity>
           </View>
         </ImageBackground>
       </View>
