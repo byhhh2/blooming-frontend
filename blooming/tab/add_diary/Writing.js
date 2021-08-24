@@ -18,6 +18,16 @@ class Writing extends Component {
     this.state = {title: '', content: '', isPrivate: false};
     this.createDiary = this.createDiary.bind(this);
   }
+  componentDidMount() {
+    this.props.navigation.setOptions({
+      title: `일기`,
+      headerTitleStyle: {
+        fontFamily: 'GmarketSansTTFMedium',
+        fontWeight: 'normal',
+        color: 'white',
+      },
+    });
+  }
   createDiary(title, content, isPrivate) {
     axios
       .post(
@@ -35,6 +45,7 @@ class Writing extends Component {
       )
       .then(response => {
         console.log(response);
+        this.props.navigation.navigate('AddDiary');
       })
       .catch(error => {
         console.log(error);
@@ -57,7 +68,7 @@ class Writing extends Component {
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <Text style={{fontWeight: 'bold'}}>
+            <Text style={{fontFamily: 'GmarketSansTTFBold', fontSize: 15}}>
               {this.state.isPrivate ? '비공개' : '전체공개'}
             </Text>
             <TouchableOpacity
@@ -69,7 +80,7 @@ class Writing extends Component {
                     ? 'lock-closed-outline'
                     : 'lock-open-outline'
                 }
-                size={25}
+                size={23}
               />
             </TouchableOpacity>
           </View>
@@ -93,20 +104,24 @@ class Writing extends Component {
                 multiline={true}
                 value={this.state.content}
                 onChangeText={text => this.setState({content: text})}
+                style={{fontFamily: 'GmarketSansTTFMedium'}}
               />
             </ScrollView>
           </View>
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <TouchableOpacity
               style={styles.btn}
-              onPress={() =>
+              onPress={() => {
                 this.createDiary(
                   this.state.title,
                   this.state.content,
                   this.state.isPrivate,
-                )
-              }>
-              <Text style={{color: 'white'}}>저장</Text>
+                );
+              }}>
+              <Text
+                style={{color: 'white', fontFamily: 'GmarketSansTTFMedium'}}>
+                저장
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -138,7 +153,7 @@ const styles = StyleSheet.create({
     paddingLeft: '2%',
     paddingRight: '2%',
     marginBottom: '4%',
-    fontWeight: 'bold',
+    fontFamily: 'GmarketSansTTFBold',
   },
   btn: {
     width: '70%',

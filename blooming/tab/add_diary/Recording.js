@@ -18,6 +18,7 @@ import AudioRecorderPlayer, {
   PlayBackType,
   RecordBackType,
 } from 'react-native-audio-recorder-player';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const audioRecorderPlayer = new AudioRecorderPlayer();
 
@@ -33,6 +34,18 @@ class Recording extends Component {
       playTime: 0,
       duration: 0,
     };
+  }
+  componentDidMount() {
+    this.props.navigation.setOptions({
+      title: '일기 녹음',
+      headerStyle: {
+        alignItems: 'center',
+      },
+      headerTitleStyle: {
+        fontFamily: 'GmarketSansTTFMedium',
+        alignSelf: 'center',
+      },
+    });
   }
   onStartRecord = async () => {
     if (Platform.OS === 'android') {

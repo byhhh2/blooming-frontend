@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -14,7 +14,17 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const TextDiary = () => {
+const TextDiary = props => {
+  useEffect(() => {
+    let date = props.route.params.diaryInfo.created_at;
+    props.navigation.setOptions({
+      title: `${date.slice(2, 4)}${date.slice(5, 7)}${date.slice(8, 10)} 일기`,
+      headerTitleStyle: {
+        fontFamily: 'GmarketSansTTFMedium',
+        fontWeight: 'normal',
+      },
+    });
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.calenderView}>
@@ -35,10 +45,14 @@ const TextDiary = () => {
       <View style={styles.contentView}>
         <View style={styles.content}>
           <View style={styles.titleView}>
-            <Text style={styles.titleText}>제목</Text>
+            <Text style={styles.titleText}>
+              {props.route.params.diaryInfo.title}
+            </Text>
           </View>
           <View style={styles.contentTextView}>
-            <Text style={styles.contentText}>내용</Text>
+            <Text style={styles.contentText}>
+              {props.route.params.diaryInfo.content}
+            </Text>
           </View>
         </View>
         <View style={styles.btn}>

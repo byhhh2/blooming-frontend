@@ -22,7 +22,14 @@ const AddDiary = props => {
             size={35}
             style={{color: 'white', marginBottom: '4%'}}
           />
-          <Text style={{color: 'white', fontSize: 12}}>텍스트</Text>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 12,
+              fontFamily: 'GmarketSansTTFMedium',
+            }}>
+            텍스트
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.btn}
@@ -32,7 +39,14 @@ const AddDiary = props => {
             size={35}
             style={{color: 'white', marginBottom: '4%'}}
           />
-          <Text style={{color: 'white', fontSize: 12}}>녹음</Text>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 12,
+              fontFamily: 'GmarketSansTTFMedium',
+            }}>
+            녹음
+          </Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
