@@ -10,14 +10,20 @@ import Home from './home/Home';
 import Profile from './profile/Profile';
 import SharedDiary from './shared_diary/SharedDiary';
 
+import AddDiaryStack from './add_diary/AddDiaryStack';
+import HomeStack from './home/HomeStack';
+import ProfileStack from './profile/ProfileStack';
+import SharedDiaryStack from './shared_diary/SharedDiaryStack';
+
 const Tab = createBottomTabNavigator();
 
 const TabNav = () => {
   return (
-    <Tab.Navigator>
+
+    <Tab.Navigator screenOptions={{headerShown: false}}>
       <Tab.Screen
-        name="Home"
-        component={Home}
+        name="HomeStack"
+        component={HomeStack}
         options={{
           tabBarLabel: '',
           tabBarIcon: () => {
@@ -32,8 +38,8 @@ const TabNav = () => {
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={Profile}
+        name="ProfileStack"
+        component={ProfileStack}
         options={{
           tabBarLabel: '',
           tabBarIcon: () => {
@@ -48,8 +54,8 @@ const TabNav = () => {
         }}
       />
       <Tab.Screen
-        name="SharedDiary"
-        component={SharedDiary}
+        name="SharedDiaryStack"
+        component={SharedDiaryStack}
         options={{
           tabBarLabel: '',
           tabBarIcon: () => {
@@ -64,8 +70,8 @@ const TabNav = () => {
         }}
       />
       <Tab.Screen
-        name="AddDiary"
-        component={AddDiary}
+        name="AddDiaryStack"
+        component={AddDiaryStack}
         options={{
           tabBarLabel: '',
           tabBarIcon: () => {
