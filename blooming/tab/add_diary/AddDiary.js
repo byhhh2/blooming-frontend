@@ -24,7 +24,9 @@ const AddDiary = props => {
           />
           <Text style={{color: 'white', fontSize: 12}}>글</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => props.navigation.navigate('Recording')}>
           <Feather
             name={'mic'}
             size={35}
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
     //backgroundColor: 'orange',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 15,
+    borderRadius: 20,
     borderColor: '#F9F9FC',
     borderWidth: 2,
     backgroundColor: 'rgba(0,0,0,0.3)',

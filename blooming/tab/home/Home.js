@@ -6,7 +6,7 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from 'react-native';
-import VoiceDiary from './VoiceDiary';
+import CalendarPicker from 'react-native-calendar-picker';
 
 const Home = () => {
   const date = new Date();
@@ -36,7 +36,19 @@ const Home = () => {
             <Text style={{color: 'white', fontSize: 12}}>행복</Text>
           </View>
         </View>
-        <View style={styles.calendarBack}></View>
+        <View style={styles.calendarBack}>
+          <CalendarPicker
+            nextTitle=">"
+            previousTitle="<"
+            nextTitleStyle={{fontSize: 30}}
+            previousTitleStyle={{fontSize: 30}}
+            todayBackgroundColor={'#AD86E3'}
+            todayTextStyle={{color: 'white'}}
+            selectedDayStyle={{
+              backgroundColor: '#E6E0FB',
+            }}
+          />
+        </View>
       </ImageBackground>
     </View>
   );
@@ -88,6 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9F9FC',
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
+    padding: '8%',
   },
 });
 
