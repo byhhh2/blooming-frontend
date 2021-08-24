@@ -22,8 +22,8 @@ const TabNav = () => {
     <Tab.Navigator screenOptions={{headerShown: false}}>
       <Tab.Screen
         name="HomeStack"
-        component={HomeStack}
-        options={{
+        //component={HomeStack}
+        options={({navigation}) => ({
           tabBarLabel: '',
           tabBarIcon: () => {
             return (
@@ -34,8 +34,9 @@ const TabNav = () => {
               />
             );
           },
-        }}
-      />
+        })}>
+        {({navigation}) => <HomeStack TabNavigation={navigation} />}
+      </Tab.Screen>
       <Tab.Screen
         name="ProfileStack"
         component={ProfileStack}
