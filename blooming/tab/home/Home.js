@@ -9,9 +9,7 @@ import {
 
 import CalendarPicker from 'react-native-calendar-picker';
 
-
 import VoiceDiary from './VoiceDiary';
-
 
 import {useNavigation} from '@react-navigation/native';
 
@@ -94,6 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+  },
   dateView: {
     //backgroundColor: 'orange',
     width: '100%',

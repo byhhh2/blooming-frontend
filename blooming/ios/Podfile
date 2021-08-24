@@ -12,6 +12,8 @@ target 'blooming' do
     :hermes_enabled => false
   )
 
+  pod 'RNAudioRecorderPlayer', :path => '../node_modules/react-native-audio-recorder-player'
+
   target 'bloomingTests' do
     inherit! :complete
     # Pods for testing
