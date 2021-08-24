@@ -22,7 +22,11 @@ const HomeStack = ({TabNavigation}) => {
 
   return (
     <Stack.Navigator initialRouteName={Home}>
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="VoiceDiary"
         // component={VoiceDiary}

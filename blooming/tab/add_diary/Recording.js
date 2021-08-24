@@ -6,12 +6,65 @@ import {
   ImageBackground,
   Image,
   TouchableOpacity,
+  PermissionsAndroid,
+  Platform,
 } from 'react-native';
+import AudioRecorderPlayer from 'react-native-audio-recorder-player';
+
+const audioRecorderPlayer = new AudioRecorderPlayer();
 
 class Recording extends Component {
   constructor(props) {
     super(props);
-    this.state = {isRecording: false};
+    this.state = {isRecording: false, recordSecs: 0, recordTime: 0};
+  }
+  onStartRecord = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const grants = await PermissionsAndroid.requestMultiple([
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+        ]);
+
+        console.log('write external stroage', grants);
+
+        if (
+          grants['android.permission.WRITE_EXTERNAL_STORAGE'] ===
+            PermissionsAndroid.RESULTS.GRANTED &&
+          grants['android.permission.READ_EXTERNAL_STORAGE'] ===
+            PermissionsAndroid.RESULTS.GRANTED &&
+          grants['android.permission.RECORD_AUDIO'] ===
+            PermissionsAndroid.RESULTS.GRANTED
+        ) {
+          console.log('permissions granted');
+        } else {
+          console.log('All required permissions not granted');
+          return;
+        }
+      } catch (err) {
+        console.warn(err);
+        return;
+      }
+    }
+  };
+
+  onStopRecord = async () => {
+    const result = await this.audioRecorderPlayer.stopRecorder();
+    this.audioRecorderPlayer.removeRecordBackListener();
+    this.setState({
+      recordSecs: 0,
+    });
+    console.log(result);
+  };
+
+  Recording() {
+    if (this.state.isRecording === true) {
+      this.onStartRecord();
+    }
+    /*else {
+      this.onStopRecord();
+    }*/
   }
   render() {
     return (
@@ -24,9 +77,10 @@ class Recording extends Component {
             style={styles.stopImage}>
             <TouchableOpacity
               style={styles.stopBtn}
-              onPress={() =>
-                this.setState({isRecording: !this.state.isRecording})
-              }>
+              onPress={() => {
+                this.setState({isRecording: !this.state.isRecording});
+                this.Recording();
+              }}>
               {!this.state.isRecording ? (
                 <Image
                   source={require(`../../images/record.png`)}
