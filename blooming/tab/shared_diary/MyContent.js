@@ -36,7 +36,7 @@ const Content = props => {
         },
       })
       .then(response => {
-        // console.log(response.data);
+        //console.log(response.data);
         if (response.data.results.length !== 0) {
           set_diary_data(response.data.results);
         }
