@@ -80,8 +80,10 @@ const Home = () => {
       } else {
         navigation.navigate('TextDiary', {
           diaryId: tmp_diary.id,
+          data: DATA,
         });
       }
+
 
       setDIARY([]);
     }
