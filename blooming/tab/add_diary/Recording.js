@@ -112,7 +112,7 @@ class Recording extends Component {
   };
 
   onStopRecord = async () => {
-    this.setState({recordingState: '저장 중...'});
+    this.setState({recordingState: '저장 완료'});
     const result = await audioRecorderPlayer.stopRecorder();
     audioRecorderPlayer.removeRecordBackListener();
     this.setState({
