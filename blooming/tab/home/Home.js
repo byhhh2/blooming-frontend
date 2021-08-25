@@ -49,7 +49,7 @@ const Home = () => {
     if (DIARY[0] !== undefined) {
       tmp_diary = DIARY[0];
       navigation.navigate('TextDiary', {
-        diaryInfo: tmp_diary,
+        diaryId: tmp_diary.id,
       });
       setDIARY([]);
     }

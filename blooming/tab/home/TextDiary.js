@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import CalendarStrip from 'react-native-calendar-strip';
+import axios from 'axios';
 
 import {useNavigation} from '@react-navigation/native';
 
@@ -16,16 +17,37 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const TextDiary = props => {
+  const [Diary, setDiary] = useState([]);
   useEffect(() => {
-    let date = props.route.params.diaryInfo.created_at;
-    props.navigation.setOptions({
-      title: `${date.slice(2, 4)}${date.slice(5, 7)}${date.slice(8, 10)} 일기`,
-      headerTitleStyle: {
-        fontFamily: 'GmarketSansTTFMedium',
-        fontWeight: 'normal',
-      },
-    });
+    getDiaryContent();
   }, []);
+
+  const getDiaryContent = () => {
+    axios
+      .get(`${axios.defaults.baseURL}/diary/${props.route.params.diaryId}`, {
+        headers: {
+          Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
+        },
+      })
+      .then(response => {
+        console.log(response.data);
+        setDiary(response.data);
+        let date = response.data.created_at;
+        props.navigation.setOptions({
+          title: `${date.slice(2, 4)}${date.slice(5, 7)}${date.slice(
+            8,
+            10,
+          )} 일기`,
+          headerTitleStyle: {
+            fontFamily: 'GmarketSansTTFMedium',
+            fontWeight: 'normal',
+          },
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
   return (
     <View style={styles.container}>
       <View style={styles.calenderView}>
@@ -46,15 +68,11 @@ const TextDiary = props => {
       <View style={styles.contentView}>
         <View style={styles.content}>
           <View style={styles.titleView}>
-            <Text style={styles.titleText}>
-              {props.route.params.diaryInfo.title}
-            </Text>
+            <Text style={styles.titleText}>{Diary.title}</Text>
           </View>
           <View style={styles.contentTextView}>
             <ScrollView style={styles.contentScrollView}>
-              <Text style={styles.contentText}>
-                {props.route.params.diaryInfo.content}
-              </Text>
+              <Text style={styles.contentText}>{Diary.content}</Text>
             </ScrollView>
           </View>
         </View>
