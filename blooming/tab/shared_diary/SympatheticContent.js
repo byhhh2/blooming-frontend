@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
   contentText: {
     fontFamily: 'GmarketSansTTFMedium',
     fontSize: 15,
+    lineHeight: 30,
   },
   empathyView: {
     alignSelf: 'flex-end',

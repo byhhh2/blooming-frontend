@@ -76,6 +76,7 @@ const Home = () => {
       if (DIARY[0].voice_file !== null) {
         navigation.navigate('VoiceDiary', {
           diaryId: tmp_diary.id,
+          voice_file: DIARY[0].voice_file,
         });
       } else {
         navigation.navigate('TextDiary', {

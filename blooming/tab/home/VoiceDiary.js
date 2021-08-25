@@ -12,6 +12,8 @@ import Sound from 'react-native-sound';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
+import axios from 'axios';
+
 let sound = new Sound('testmp3.mp3');
 let flag = false;
 
@@ -45,11 +47,18 @@ function useInterval(callback, delay) {
   }, [delay]);
 }
 
-const VoiceDiary = ({TabNavigation}) => {
+const VoiceDiary = ({TabNavigation, voice_file}) => {
   const [soundOn, setSoundOn] = useState(false);
   const [duration, setDuration] = useState(sound.getDuration());
   const [current, setCurrent] = useState(0);
+  const [data, setData] = useState([]);
+  const [fileName, setFileName] = useState('');
+
   let tf = false;
+
+  useEffect(() => {
+    getFiles();
+  }, []);
 
   const playSound = () => {
     sound.play();
@@ -61,6 +70,45 @@ const VoiceDiary = ({TabNavigation}) => {
   const stopSound = () => {
     flag = false;
     sound.pause();
+  };
+
+  const getFiles = () => {
+    axios
+      .get(`${axios.defaults.baseURL}/files/`, {
+        headers: {
+          Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
+        },
+      })
+      .then(response => {
+        //console.log(response.data.results);
+        setData(response.data.results);
+
+        let i = 0;
+
+        for (i = 0; i < response.data.results.length; i++) {
+          if (response.data.results[i].id === voice_file) {
+            getUpload(response.data.results[i].name);
+          }
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const getUpload = file_name => {
+    axios
+      .get(`${axios.defaults.baseURL}/uploads/${file_name}`, {
+        headers: {
+          Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
+        },
+      })
+      .then(response => {
+        console.log('file??', response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   return (
