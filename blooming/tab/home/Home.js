@@ -84,7 +84,6 @@ const Home = () => {
         });
       }
 
-
       setDIARY([]);
     }
   };
@@ -94,9 +93,6 @@ const Home = () => {
   }, []);
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('VoiceDiary')}>
-        <Text>Voice diary</Text>
-      </TouchableOpacity>
       <ImageBackground
         source={require(`../../images/background.png`)}
         style={{width: '100%', height: '100%'}}>
