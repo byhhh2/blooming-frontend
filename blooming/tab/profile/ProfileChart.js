@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {
   LineChart,
@@ -9,19 +9,7 @@ import {
   StackedBarChart,
 } from 'react-native-chart-kit';
 
-const data = {
-  labels: ['J', 'F', 'M', 'A', 'M', 'J'],
-  datasets: [
-    {
-      data: [20, 45, 28, 80, 99, 43],
-      color: (opacity = 1) => '#22195D', // optional
-      strokeWidth: 2, // optional
-    },
-  ],
-  legend: [], // optional
-};
-
-//rgba(134, 65, 244, ${opacity})
+import axios from 'axios';
 
 const chartConfig = {
   backgroundGradientFrom: 'white',
@@ -35,6 +23,51 @@ const chartConfig = {
 };
 
 const ProfileChart = ({month}) => {
+  const [score, setScore] = useState([
+    {
+      score: 0,
+    },
+    {
+      score: 0,
+    },
+    {
+      score: 0,
+    },
+  ]);
+
+  const data = {
+    labels: ['1일', '', '', '', '31일'],
+    // labels: [],
+    datasets: [
+      {
+        // data: [20, 45, 28, 80, 99, 43],
+        data: score.map(x => (score.length <= 0 ? 1 : x.score)).concat([0, 0]),
+        color: (opacity = 1) => '#22195D', // optional
+        strokeWidth: 2, // optional
+      },
+    ],
+    legend: [], // optional
+  };
+
+  useEffect(() => {
+    getStats();
+  }, []);
+
+  const getStats = () => {
+    axios
+      .get(`${axios.defaults.baseURL}/diary/stats/?month=2021-${month}`, {
+        headers: {
+          Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
+        },
+      })
+      .then(response => {
+        setScore(response.data.results);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.graphView}>

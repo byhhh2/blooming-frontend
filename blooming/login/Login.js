@@ -28,7 +28,7 @@ class Login extends Component {
       .then(response => {
         const token = response.data.access;
         axios.defaults.headers.common['Authorization'] = token;
-        console.log(response);
+        // console.log(response);
         this.props.navigation.navigate('TabNav');
       })
       .catch(error => {
