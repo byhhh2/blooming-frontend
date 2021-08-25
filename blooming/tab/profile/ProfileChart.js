@@ -22,6 +22,8 @@ const chartConfig = {
   useShadowColorFromDataset: false, // optional
 };
 
+let ii = 0;
+
 const ProfileChart = ({month}) => {
   const [score, setScore] = useState([
     {
@@ -34,6 +36,9 @@ const ProfileChart = ({month}) => {
       score: 0,
     },
   ]);
+
+  const [score_exp, setScore_exp] = useState([]);
+  const [avg_score, setAvg_score] = useState(0);
 
   const data = {
     labels: ['1일', '', '', '', '31일'],
@@ -51,6 +56,7 @@ const ProfileChart = ({month}) => {
 
   useEffect(() => {
     getStats();
+    getScoreOfMonth();
   }, []);
 
   const getStats = () => {
@@ -66,6 +72,36 @@ const ProfileChart = ({month}) => {
       .catch(error => {
         console.log(error);
       });
+  };
+
+  const getScoreOfMonth = () => {
+    axios
+      .get(`${axios.defaults.baseURL}/diary/score/?month=2021-${month}`, {
+        headers: {
+          Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
+        },
+      })
+      .then(response => {
+        setAvg_score(response.data.mean);
+        // console.log(response.data.mean);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const returnMindState = avg => {
+    if (avg >= -1 && avg < 0.2) {
+      return '매우 나쁨';
+    } else if (avg >= 0.2 && avg < 0.4) {
+      return '나쁨';
+    } else if (avg >= 0.4 && avg < 0.6) {
+      return '보통';
+    } else if (avg >= 0.6 && avg < 0.8) {
+      return '좋음';
+    } else if (avg >= 0.8 && avg < 1.0) {
+      return '매우 좋음';
+    }
   };
 
   return (
@@ -89,7 +125,11 @@ const ProfileChart = ({month}) => {
           <Text style={styles.headerText}>{month}월 감정 상태 진단</Text>
         </View>
         <View style={styles.contentView}>
-          <Text style={styles.contentText}>감정 진단 내용</Text>
+          <Text style={styles.contentText}>
+            {avg_score === undefined || null
+              ? '일기가 충분하지 않습니다.'
+              : returnMindState(avg_score)}
+          </Text>
         </View>
       </View>
     </View>
