@@ -34,7 +34,7 @@ const chartConfig = {
   useShadowColorFromDataset: false, // optional
 };
 
-const ProfileChart = () => {
+const ProfileChart = ({month}) => {
   return (
     <View style={styles.container}>
       <View style={styles.graphView}>
@@ -53,7 +53,7 @@ const ProfileChart = () => {
       </View>
       <View style={styles.stateDiagnosisView}>
         <View style={styles.stateDiagnosisHeader}>
-          <Text style={styles.headerText}>7월 감정 상태 진단</Text>
+          <Text style={styles.headerText}>{month}월 감정 상태 진단</Text>
         </View>
         <View style={styles.contentView}>
           <Text style={styles.contentText}>감정 진단 내용</Text>

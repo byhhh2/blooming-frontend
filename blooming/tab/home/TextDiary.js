@@ -5,6 +5,7 @@ import {
   View,
   ImageBackground,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import CalendarStrip from 'react-native-calendar-strip';
 
@@ -50,9 +51,11 @@ const TextDiary = props => {
             </Text>
           </View>
           <View style={styles.contentTextView}>
-            <Text style={styles.contentText}>
-              {props.route.params.diaryInfo.content}
-            </Text>
+            <ScrollView style={styles.contentScrollView}>
+              <Text style={styles.contentText}>
+                {props.route.params.diaryInfo.content}
+              </Text>
+            </ScrollView>
           </View>
         </View>
         <View style={styles.btn}>
@@ -135,6 +138,9 @@ const styles = StyleSheet.create({
   },
   rightBtn: {
     flexDirection: 'row',
+  },
+  contentScrollView: {
+    height: '80%',
   },
 });
 

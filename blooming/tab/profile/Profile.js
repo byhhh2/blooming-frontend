@@ -4,6 +4,10 @@ import {StyleSheet, Text, View} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import ProfileChart from './ProfileChart';
 
+import {LogBox} from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
+
 const _Tab = createMaterialTopTabNavigator();
 
 const Profile = () => {
@@ -26,124 +30,136 @@ const Profile = () => {
       }}>
       <_Tab.Screen
         name="1월"
-        component={ProfileChart}
+        //component={ProfileChart}
         options={{
           title: '1월',
           tabBarLabelStyle: {
             fontFamily: 'GmarketSansTTFMedium',
           },
-        }}
-      />
+        }}>
+        {() => <ProfileChart month={1} />}
+      </_Tab.Screen>
       <_Tab.Screen
         name="2월"
-        component={ProfileChart}
+        // component={ProfileChart}
         options={{
           title: '2월',
           tabBarLabelStyle: {
             fontFamily: 'GmarketSansTTFMedium',
           },
-        }}
-      />
+        }}>
+        {() => <ProfileChart month={2} />}
+      </_Tab.Screen>
       <_Tab.Screen
         name="3월"
-        component={ProfileChart}
+        // component={ProfileChart}
         options={{
           title: '3월',
           tabBarLabelStyle: {
             fontFamily: 'GmarketSansTTFMedium',
           },
-        }}
-      />
+        }}>
+        {() => <ProfileChart month={3} />}
+      </_Tab.Screen>
       <_Tab.Screen
         name="4월"
-        component={ProfileChart}
+        //component={ProfileChart}
         options={{
           title: '4월',
           tabBarLabelStyle: {
             fontFamily: 'GmarketSansTTFMedium',
           },
-        }}
-      />
+        }}>
+        {() => <ProfileChart month={4} />}
+      </_Tab.Screen>
       <_Tab.Screen
         name="5월"
-        component={ProfileChart}
+        //component={ProfileChart}
         options={{
           title: '5월',
           tabBarLabelStyle: {
             fontFamily: 'GmarketSansTTFMedium',
           },
-        }}
-      />
+        }}>
+        {() => <ProfileChart month={5} />}
+      </_Tab.Screen>
       <_Tab.Screen
         name="6월"
-        component={ProfileChart}
+        //component={ProfileChart}
         options={{
           title: '6월',
           tabBarLabelStyle: {
             fontFamily: 'GmarketSansTTFMedium',
           },
-        }}
-      />
+        }}>
+        {() => <ProfileChart month={6} />}
+      </_Tab.Screen>
       <_Tab.Screen
         name="7월"
-        component={ProfileChart}
+        //component={ProfileChart}
         options={{
           title: '7월',
           tabBarLabelStyle: {
             fontFamily: 'GmarketSansTTFMedium',
           },
-        }}
-      />
+        }}>
+        {() => <ProfileChart month={7} />}
+      </_Tab.Screen>
       <_Tab.Screen
         name="8월"
-        component={ProfileChart}
+        //component={ProfileChart}
         options={{
           title: '8월',
           tabBarLabelStyle: {
             fontFamily: 'GmarketSansTTFMedium',
           },
-        }}
-      />
+        }}>
+        {() => <ProfileChart month={8} />}
+      </_Tab.Screen>
       <_Tab.Screen
         name="9월"
-        component={ProfileChart}
+        //component={ProfileChart}
         options={{
           title: '9월',
           tabBarLabelStyle: {
             fontFamily: 'GmarketSansTTFMedium',
           },
-        }}
-      />
+        }}>
+        {() => <ProfileChart month={9} />}
+      </_Tab.Screen>
       <_Tab.Screen
         name="10월"
-        component={ProfileChart}
+        //component={ProfileChart}
         options={{
           title: '10월',
           tabBarLabelStyle: {
             fontFamily: 'GmarketSansTTFMedium',
           },
-        }}
-      />
+        }}>
+        {() => <ProfileChart month={10} />}
+      </_Tab.Screen>
       <_Tab.Screen
         name="11월"
-        component={ProfileChart}
+        //component={ProfileChart}
         options={{
           title: '11월',
           tabBarLabelStyle: {
             fontFamily: 'GmarketSansTTFMedium',
           },
-        }}
-      />
+        }}>
+        {() => <ProfileChart month={11} />}
+      </_Tab.Screen>
       <_Tab.Screen
         name="12월"
-        component={ProfileChart}
+        //component={ProfileChart}
         options={{
           title: '12월',
           tabBarLabelStyle: {
             fontFamily: 'GmarketSansTTFMedium',
           },
-        }}
-      />
+        }}>
+        {() => <ProfileChart month={12} />}
+      </_Tab.Screen>
     </_Tab.Navigator>
   );
 };
