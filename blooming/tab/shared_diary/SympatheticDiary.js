@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-import Content from './RandomContent';
+import Content from './SympatheticContent';
 
 const SympatheticDiary = () => {
   return (
