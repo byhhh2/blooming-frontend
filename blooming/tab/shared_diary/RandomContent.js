@@ -1,26 +1,75 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import axios from 'axios';
 
-const Content = () => {
+let cnt = 0;
+
+const Content = props => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [like, setLike] = useState([]);
 
+  const [cnt_state, set_cnt] = useState(0);
+
+  const [diary_data, set_diary_data] = useState([
+    {
+      title: 'title',
+      content: 'content',
+    },
+  ]);
+
+  const getListofDiary = () => {
+    axios
+      .get(`${axios.defaults.baseURL}/diary/random/`, {
+        headers: {
+          Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
+        },
+      })
+      .then(response => {
+        console.log(response.data);
+        set_diary_data(response.data.results);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    getListofDiary();
+  }, [props]);
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.leftBtn}>
+      <TouchableOpacity
+        style={styles.leftBtn}
+        onPress={() => {
+          if (cnt > 0) {
+            cnt--;
+            set_cnt(cnt_state - 1);
+            console.log(cnt);
+          }
+        }}>
         <AntDesign name={'left'} size={20} />
       </TouchableOpacity>
       <View style={styles.contentView}>
         <View style={styles.titleView}>
-          <Text style={styles.titleText}>제목</Text>
+          <Text style={styles.titleText}>{diary_data[cnt_state].title}</Text>
         </View>
         <View style={styles.contentTextView}>
-          <Text style={styles.contentText}>내용</Text>
+          <ScrollView style={styles.textScrollView}>
+            <Text style={styles.contentText}>
+              {diary_data[cnt_state].content}
+            </Text>
+          </ScrollView>
         </View>
       </View>
       <View style={styles.empathyView}>
@@ -33,7 +82,15 @@ const Content = () => {
           />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.rightBtn}>
+      <TouchableOpacity
+        style={styles.rightBtn}
+        onPress={() => {
+          if (cnt < diary_data.length - 1) {
+            cnt++;
+            set_cnt(cnt_state + 1);
+            console.log(cnt);
+          }
+        }}>
         <AntDesign name={'right'} size={20} />
       </TouchableOpacity>
     </View>
@@ -97,6 +154,11 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     position: 'absolute',
     right: 10,
+  },
+  textScrollView: {
+    height: '80%',
+    //margin: 10,
+    marginTop: 20,
   },
 });
 
