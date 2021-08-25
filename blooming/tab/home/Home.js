@@ -50,6 +50,7 @@ const Home = () => {
       tmp_diary = DIARY[0];
       navigation.navigate('TextDiary', {
         diaryId: tmp_diary.id,
+        data: DATA,
       });
       setDIARY([]);
     }

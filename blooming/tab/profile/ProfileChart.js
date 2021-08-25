@@ -17,7 +17,7 @@ const chartConfig = {
   backgroundGradientTo: 'white',
   backgroundGradientToOpacity: 0.5,
   color: (opacity = 1) => '#4148A5',
-  strokeWidth: 2, // optional, default 3
+  //strokeWidth: 3, // optional, default 3
   barPercentage: 0.5,
   useShadowColorFromDataset: false, // optional
 };
@@ -42,14 +42,14 @@ const ProfileChart = ({month}) => {
   const [diary_count, setDiary_count] = useState(0);
 
   const data = {
-    labels: ['1일', '', '', '', '31일'],
+    labels: ['월초', '', '', '', '월말'],
     // labels: [],
     datasets: [
       {
         // data: [20, 45, 28, 80, 99, 43],
         data: score.map(x => (score.length <= 0 ? 1 : x.score)).concat([0, 0]),
         color: (opacity = 1) => '#22195D', // optional
-        strokeWidth: 2, // optional
+        strokeWidth: 3, // optional
       },
     ],
     legend: [], // optional

@@ -25,12 +25,13 @@ const TextDiary = props => {
   const [content, setContent] = useState('');
   const [isPrivate, setPrivate] = useState(false);
   useEffect(() => {
-    getDiaryContent();
+    getDiaryContent(props.route.params.diaryId);
+    //console.log(props.route.params.data);
   }, []);
 
-  const getDiaryContent = () => {
+  const getDiaryContent = id => {
     axios
-      .get(`${axios.defaults.baseURL}/diary/${props.route.params.diaryId}`, {
+      .get(`${axios.defaults.baseURL}/diary/${id}`, {
         headers: {
           Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
         },
@@ -108,6 +109,27 @@ const TextDiary = props => {
           dateNumberStyle={{color: 'black'}}
           dateNameStyle={{color: '#AD86E3'}}
           iconContainer={{flex: 0.1}}
+          onDateSelected={date => {
+            let date_string =
+              '' +
+              date.year() +
+              '-' +
+              `${date.month() + 1 < 10 ? '0' : ''}` +
+              (date.month() + 1) +
+              '-' +
+              date.date();
+
+            let i = 0;
+
+            for (i = 0; i < props.route.params.data.length; i++) {
+              if (props.route.params.data[i].created_at === date_string) {
+                getDiaryContent(props.route.params.data[i].id);
+                console.log(props.route.params.data[i].id);
+              }
+            }
+          }}
+          minDate={'2020-12-30T12:00:00.000Z'}
+          maxDate={'2021-08-30T12:00:00.000Z'}
         />
       </View>
       <View style={styles.contentView}>
