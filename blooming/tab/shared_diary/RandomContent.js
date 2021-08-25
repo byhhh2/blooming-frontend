@@ -22,8 +22,8 @@ const Content = props => {
 
   const [diary_data, set_diary_data] = useState([
     {
-      title: 'title',
-      content: 'content',
+      title: '공유한 일기가 없습니다',
+      content: '',
       like: [],
     },
   ]);
@@ -36,8 +36,11 @@ const Content = props => {
         },
       })
       .then(response => {
-        //console.log(response.data);
-        set_diary_data(response.data.results);
+        // console.log(response.data);
+        if (response.data.results.length !== 0) {
+          set_diary_data(response.data.results);
+        }
+
       })
       .catch(error => {
         console.log(error);
