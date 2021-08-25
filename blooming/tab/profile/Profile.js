@@ -3,6 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import ProfileChart from './ProfileChart';
+// import ProfileChartTest from './ProfileChartTest';
 
 import {LogBox} from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
