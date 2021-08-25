@@ -155,11 +155,13 @@ class Recording extends Component {
   };
   onStartPlay = async () => {
     console.log('onStartPlay');
+    const dirs = RNFetchBlob.fs.dirs;
+    const path = `file://${dirs.CacheDir}/diary.mp4`;
     //? Custom path
-    // const msg = await this.audioRecorderPlayer.startPlayer(this.path);
+    const msg = await audioRecorderPlayer.startPlayer(path);
 
     //? Default path
-    const msg = await audioRecorderPlayer.startPlayer();
+    //const msg = await audioRecorderPlayer.startPlayer();
     const volume = await audioRecorderPlayer.setVolume(1.0);
     console.log(`file: ${msg}`, `volume: ${volume}`);
 
