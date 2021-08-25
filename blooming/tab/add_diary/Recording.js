@@ -19,6 +19,8 @@ import AudioRecorderPlayer, {
   RecordBackType,
 } from 'react-native-audio-recorder-player';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import RNFetchBlob from 'rn-fetch-blob';
+import axios from 'axios';
 
 const audioRecorderPlayer = new AudioRecorderPlayer();
 
@@ -26,6 +28,7 @@ class Recording extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      recordingState: '녹음 하기',
       isRecording: false,
       recordSecs: 0,
       recordTime: 0,
@@ -48,6 +51,7 @@ class Recording extends Component {
     });
   }
   onStartRecord = async () => {
+    this.setState({recordingState: '녹음 중...'});
     if (Platform.OS === 'android') {
       try {
         const grants = await PermissionsAndroid.requestMultiple([
@@ -76,9 +80,9 @@ class Recording extends Component {
         return;
       }
     }
-
+    const dirs = RNFetchBlob.fs.dirs;
     const path = Platform.select({
-      android: 'file:////', // should give extra dir name in android. Won't grant permission to the first level of dir.
+      android: `${dirs.CacheDir}/diary.mp4`, // should give extra dir name in android. Won't grant permission to the first level of dir.
     });
     const audioSet = {
       AudioEncoderAndroid: AudioEncoderAndroidType.AAC,
@@ -92,7 +96,7 @@ class Recording extends Component {
     let uri;
 
     try {
-      uri = await audioRecorderPlayer.startRecorder(undefined, audioSet);
+      uri = await audioRecorderPlayer.startRecorder(path, audioSet);
     } catch (e) {
       console.log('ERR audioRecorderPlayer.startRecorder: ', e);
     }
@@ -108,12 +112,46 @@ class Recording extends Component {
   };
 
   onStopRecord = async () => {
+    this.setState({recordingState: '저장 중...'});
     const result = await audioRecorderPlayer.stopRecorder();
     audioRecorderPlayer.removeRecordBackListener();
     this.setState({
       recordSecs: 0,
     });
     console.log(result);
+    this.upload();
+  };
+
+  upload = async () => {
+    let date = new Date();
+    date = `${date.getHours() + 9}:${date.getMinutes()}:${date.getSeconds()}`;
+    const dirs = RNFetchBlob.fs.dirs;
+    const path = `file://${dirs.CacheDir}/diary.mp4`;
+    console.log('path:' + path);
+    const formData = new FormData();
+    formData.append('file', {
+      uri: path,
+      name: date,
+      type: 'audio/mp4',
+    });
+    try {
+      axios
+        .post(`${axios.defaults.baseURL}/files/`, formData, {
+          headers: {
+            Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then(response => {
+          console.log(response);
+          this.setState({recordingState: '저장 완료!'});
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } catch (err) {
+      console.log('error' + err);
+    }
   };
   onStartPlay = async () => {
     console.log('onStartPlay');
@@ -174,13 +212,10 @@ class Recording extends Component {
               )}
             </TouchableOpacity>
           </ImageBackground>
-          <View>
-            <TouchableOpacity onPress={() => this.onStartPlay()}>
-              <Text style={{color: 'white'}}>음성 바</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.onStopPlay()}>
-              <Text style={{color: 'white'}}>음성 바</Text>
-            </TouchableOpacity>
+          <View style={{marginTop: '5%'}}>
+            <Text style={{fontFamily: 'GmarketSansTTFMedium', color: 'white'}}>
+              {this.state.recordingState}
+            </Text>
           </View>
         </ImageBackground>
       </View>
