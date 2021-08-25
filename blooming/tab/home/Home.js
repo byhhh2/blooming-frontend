@@ -15,15 +15,39 @@ const Home = () => {
   const date = new Date();
   const [DATA, setDATA] = useState([]);
   const [DIARY, setDIARY] = useState([]);
+  const [score, setScore] = useState('');
   const navigation = useNavigation();
+  const getScore = () => {
+    let config = {
+      headers: {
+        Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
+      },
+      params: {
+        month: '2021-08',
+      },
+    };
+    axios
+      .get(`${axios.defaults.baseURL}/diary/score/`, config)
+      .then(response => {
+        //console.log(response.data.mean);
+        setScore(response.data.mean);
+        //console.log(score);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
   const getDiaryList = () => {
+    let tmp = new Date();
+    tmp = date;
+    tmp = tmp.toISOString().slice(0, 10);
     let config = {
       headers: {
         Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
       },
       params: {
         created_at__gte: '2020-12-30',
-        created_at__lte: '2021-08-27',
+        created_at__lte: tmp,
       },
     };
     axios
@@ -46,16 +70,25 @@ const Home = () => {
         return x.created_at === tmp;
       }),
     );
+    console.log(DIARY[0]);
     if (DIARY[0] !== undefined) {
       tmp_diary = DIARY[0];
-      navigation.navigate('TextDiary', {
-        diaryId: tmp_diary.id,
-      });
+      if (DIARY[0].voice_file !== null) {
+        navigation.navigate('VoiceDiary', {
+          diaryId: tmp_diary.id,
+        });
+      } else {
+        navigation.navigate('TextDiary', {
+          diaryId: tmp_diary.id,
+        });
+      }
+
       setDIARY([]);
     }
   };
   useEffect(() => {
     getDiaryList();
+    getScore();
   }, []);
   return (
     <View style={styles.container}>
@@ -79,7 +112,7 @@ const Home = () => {
           <Text style={styles.emotionTitle}>{`${
             date.getMonth() + 1
           }월 평균 감정 지수`}</Text>
-          <Temperature reputation={36.5} />
+          <Temperature reputation={Number(score)} />
           <View
             style={{
               width: '100%',
@@ -137,7 +170,7 @@ const Temperature = ({reputation}) => {
       <View
         style={{
           backgroundColor: '#0F143A',
-          width: `${reputation}%`,
+          width: `${reputation * 100}%`,
           height: 15,
           borderRadius: 20,
           alignItems: 'center',
