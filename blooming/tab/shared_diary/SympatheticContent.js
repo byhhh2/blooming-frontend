@@ -22,21 +22,24 @@ const Content = props => {
 
   const [diary_data, set_diary_data] = useState([
     {
-      title: 'title',
-      content: 'content',
+      title: '공유한 일기가 없습니다',
+      content: '',
+      like: [],
     },
   ]);
 
   const getListofDiary = () => {
     axios
-      .get(`${axios.defaults.baseURL}/diary/random/`, {
+      .get(`${axios.defaults.baseURL}/diary/liked/`, {
         headers: {
           Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
         },
       })
       .then(response => {
-        console.log(response.data);
-        set_diary_data(response.data.results);
+        // console.log(response.data);
+        if (response.data.results.length !== 0) {
+          set_diary_data(response.data.results);
+        }
       })
       .catch(error => {
         console.log(error);
@@ -44,7 +47,7 @@ const Content = props => {
   };
 
   useEffect(() => {
-    //getListofDiary();
+    getListofDiary();
   }, [props]);
 
   return (
@@ -73,7 +76,9 @@ const Content = props => {
         </View>
       </View>
       <View style={styles.empathyView}>
-        <Text style={styles.empathyText}>공감돼요 {52}</Text>
+        <Text style={styles.empathyText}>
+          공감돼요 {diary_data[cnt_state].like.length}
+        </Text>
         <TouchableOpacity>
           <Ionicons
             name={'heart-outline'}

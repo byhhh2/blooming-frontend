@@ -39,6 +39,7 @@ const ProfileChart = ({month}) => {
 
   const [score_exp, setScore_exp] = useState([]);
   const [avg_score, setAvg_score] = useState(0);
+  const [diary_count, setDiary_count] = useState(0);
 
   const data = {
     labels: ['1일', '', '', '', '31일'],
@@ -57,6 +58,7 @@ const ProfileChart = ({month}) => {
   useEffect(() => {
     getStats();
     getScoreOfMonth();
+    getCount();
   }, []);
 
   const getStats = () => {
@@ -90,6 +92,23 @@ const ProfileChart = ({month}) => {
       });
   };
 
+  const getCount = () => {
+    axios
+      .get(`${axios.defaults.baseURL}/diary/count/?month=2021-${month}`, {
+        headers: {
+          Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
+        },
+      })
+      .then(response => {
+        //setAvg_score(response.data.mean);
+        // console.log(response.data.count);
+        setDiary_count(response.data.count);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   const returnMindState = avg => {
     if (avg >= -1 && avg < 0.2) {
       return '매우 나쁨';
@@ -107,7 +126,7 @@ const ProfileChart = ({month}) => {
   return (
     <View style={styles.container}>
       <View style={styles.graphView}>
-        <Text style={styles.graphText}>일기 쓴 일 수 : 51일</Text>
+        <Text style={styles.graphText}>일기 쓴 일 수 : {diary_count}일</Text>
         <LineChart
           data={data}
           width={350}
