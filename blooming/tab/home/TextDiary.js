@@ -4,6 +4,7 @@ import {
   Text,
   View,
   ImageBackground,
+  TextInput,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
@@ -17,7 +18,12 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const TextDiary = props => {
+  const navigation = useNavigation();
   const [Diary, setDiary] = useState([]);
+  const [isEdit, setEdit] = useState(false);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [isPrivate, setPrivate] = useState(false);
   useEffect(() => {
     getDiaryContent();
   }, []);
@@ -30,7 +36,7 @@ const TextDiary = props => {
         },
       })
       .then(response => {
-        console.log(response.data);
+        //console.log(response.data);
         setDiary(response.data);
         let date = response.data.created_at;
         props.navigation.setOptions({
@@ -43,6 +49,45 @@ const TextDiary = props => {
             fontWeight: 'normal',
           },
         });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  const deleteDiary = () => {
+    axios
+      .get(`${axios.defaults.baseURL}/diary/${props.route.params.diaryId}`, {
+        headers: {
+          Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
+        },
+      })
+      .then(response => {
+        console.log(response);
+        navigation.navigate('Home');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  const editDiary = () => {
+    axios
+      .patch(
+        `${axios.defaults.baseURL}/diary/${props.route.params.diaryId}`,
+        {
+          content: content,
+          is_private: isPrivate,
+          title: title,
+        },
+        {
+          headers: {
+            Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
+          },
+        },
+      )
+      .then(response => {
+        console.log(response);
+        setDiary(response.data);
+        setEdit(false);
       })
       .catch(error => {
         console.log(error);
@@ -68,31 +113,94 @@ const TextDiary = props => {
       <View style={styles.contentView}>
         <View style={styles.content}>
           <View style={styles.titleView}>
-            <Text style={styles.titleText}>{Diary.title}</Text>
+            {isEdit ? (
+              <>
+                <View
+                  style={{
+                    width: '100%',
+                    justifyContent: 'flex-end',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={{fontFamily: 'GmarketSansTTFBold', fontSize: 15}}>
+                    {isPrivate ? '비공개' : '전체공개'}
+                  </Text>
+                  <TouchableOpacity
+                    style={{marginLeft: '2%'}}
+                    onPress={() => setPrivate(!isPrivate)}>
+                    <Ionicons
+                      name={
+                        isPrivate ? 'lock-closed-outline' : 'lock-open-outline'
+                      }
+                      size={23}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <TextInput
+                  placeholder={'제목을 입력하세요'}
+                  style={styles.title}
+                  value={title}
+                  onChangeText={text => setTitle(text)}
+                />
+              </>
+            ) : (
+              <Text style={styles.titleText}>{Diary.title}</Text>
+            )}
           </View>
           <View style={styles.contentTextView}>
             <ScrollView style={styles.contentScrollView}>
-              <Text style={styles.contentText}>{Diary.content}</Text>
+              {isEdit ? (
+                <TextInput
+                  placeholder={'내용을 입력하세요'}
+                  style={{fontFamily: 'GmarketSansTTFMedium'}}
+                  multiline={true}
+                  value={content}
+                  onChangeText={text => setContent(text)}
+                />
+              ) : (
+                <Text style={styles.contentText}>{Diary.content}</Text>
+              )}
             </ScrollView>
           </View>
         </View>
-        <View style={styles.btn}>
-          <View>
-            <Ionicons
-              name={'share-social-outline'}
-              size={33}
-              style={{color: 'gray'}}
-            />
+
+        {isEdit ? (
+          <View style={[styles.btn, {justifyContent: 'center'}]}>
+            <TouchableOpacity
+              style={styles.saveBtn}
+              onPress={() => editDiary()}>
+              <Text
+                style={{color: 'white', fontFamily: 'GmarketSansTTFMedium'}}>
+                저장
+              </Text>
+            </TouchableOpacity>
           </View>
-          <View style={styles.rightBtn}>
-            <EvilIcons name={'pencil'} size={47} style={{color: 'gray'}} />
-            <EvilIcons
-              name={'trash'}
-              size={45}
-              style={{color: 'gray', marginTop: 3}}
-            />
+        ) : (
+          <View style={styles.btn}>
+            <View>
+              <TouchableOpacity>
+                <Ionicons
+                  name={'share-social-outline'}
+                  size={33}
+                  style={{color: 'gray'}}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.rightBtn}>
+              <TouchableOpacity onPress={() => setEdit(true)}>
+                <EvilIcons name={'pencil'} size={47} style={{color: 'gray'}} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => deleteDiary()}>
+                <EvilIcons
+                  name={'trash'}
+                  size={45}
+                  style={{color: 'gray', marginTop: 3}}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        )}
       </View>
     </View>
   );
@@ -159,6 +267,23 @@ const styles = StyleSheet.create({
   },
   contentScrollView: {
     height: '80%',
+  },
+  title: {
+    width: '100%',
+    height: 50,
+    fontSize: 20,
+    paddingLeft: '2%',
+    paddingRight: '2%',
+    fontFamily: 'GmarketSansTTFBold',
+  },
+  saveBtn: {
+    width: '70%',
+    height: 40,
+    marginTop: '2%',
+    borderRadius: 15,
+    backgroundColor: '#9298DF',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
