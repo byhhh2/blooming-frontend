@@ -24,7 +24,6 @@ const Content = props => {
     {
       title: 'title',
       content: 'content',
-      like: [],
     },
   ]);
 
@@ -45,7 +44,7 @@ const Content = props => {
   };
 
   useEffect(() => {
-    getListofDiary();
+    //getListofDiary();
   }, [props]);
 
   return (
@@ -74,9 +73,7 @@ const Content = props => {
         </View>
       </View>
       <View style={styles.empathyView}>
-        <Text style={styles.empathyText}>
-          공감돼요 {diary_data[cnt_state].like.length}
-        </Text>
+        <Text style={styles.empathyText}>공감돼요 {52}</Text>
         <TouchableOpacity>
           <Ionicons
             name={'heart-outline'}

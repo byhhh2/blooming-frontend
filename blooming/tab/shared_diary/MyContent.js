@@ -30,7 +30,7 @@ const Content = props => {
 
   const getListofDiary = () => {
     axios
-      .get(`${axios.defaults.baseURL}/diary/random/`, {
+      .get(`${axios.defaults.baseURL}/diary/shared/`, {
         headers: {
           Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
         },
