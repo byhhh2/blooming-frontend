@@ -14,7 +14,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import axios from 'axios';
 
-let sound = new Sound('testmp3.mp3');
+let sound = new Sound('diary.mp3');
 let flag = false;
 
 const Counter = () => {
@@ -57,7 +57,7 @@ const VoiceDiary = ({TabNavigation, voice_file}) => {
   let tf = false;
 
   useEffect(() => {
-    getFiles();
+    //getFiles();
   }, []);
 
   const playSound = () => {
