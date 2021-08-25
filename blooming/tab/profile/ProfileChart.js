@@ -165,12 +165,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     //backgroundColor: 'red',
+    marginRight: 40,
   },
   graphText: {
     alignSelf: 'center',
     fontFamily: 'GmarketSansTTFMedium',
     fontSize: 20,
     paddingTop: 20,
+    marginLeft: 35,
   },
   stateDiagnosisView: {
     flex: 1,
