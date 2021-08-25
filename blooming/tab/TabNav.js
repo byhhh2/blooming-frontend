@@ -27,6 +27,7 @@ const TabNav = () => {
         name="HomeStack"
         //component={HomeStack}
         options={({navigation}) => ({
+          unmountOnBlur: true,
           tabBarLabel: '',
           tabBarIcon: () => {
             return (

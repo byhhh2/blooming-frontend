@@ -56,7 +56,7 @@ const TextDiary = props => {
   };
   const deleteDiary = () => {
     axios
-      .get(`${axios.defaults.baseURL}/diary/${props.route.params.diaryId}`, {
+      .delete(`${axios.defaults.baseURL}/diary/${props.route.params.diaryId}`, {
         headers: {
           Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
         },
@@ -93,6 +93,7 @@ const TextDiary = props => {
         console.log(error);
       });
   };
+  const date = new Date();
   return (
     <View style={styles.container}>
       <View style={styles.calenderView}>

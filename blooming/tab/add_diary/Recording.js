@@ -121,9 +121,31 @@ class Recording extends Component {
     console.log(result);
     this.upload();
   };
-
-  upload = async () => {
+  createDiary = recordFile => {
+    axios
+      .post(
+        `${axios.defaults.baseURL}/diary/`,
+        {
+          voice_file: recordFile,
+        },
+        {
+          headers: {
+            Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
+            //'Content-Type': 'multipart/form-data',
+          },
+        },
+      )
+      .then(response => {
+        console.log(response);
+        this.setState({recordingState: '저장 완료!'});
+      })
+      .catch(error => {
+        console.log('d' + error);
+      });
+  };
+  upload = () => {
     let date = new Date();
+    let recordFile = [];
     date = `${date.getHours() + 9}:${date.getMinutes()}:${date.getSeconds()}`;
     const dirs = RNFetchBlob.fs.dirs;
     const path = `file://${dirs.CacheDir}/diary.mp4`;
@@ -131,7 +153,7 @@ class Recording extends Component {
     const formData = new FormData();
     formData.append('file', {
       uri: path,
-      name: date,
+      name: `${date}.mp4`,
       type: 'audio/mp4',
     });
     try {
@@ -143,8 +165,9 @@ class Recording extends Component {
           },
         })
         .then(response => {
-          console.log(response);
-          this.setState({recordingState: '저장 완료!'});
+          recordFile = response.data;
+          console.log(recordFile.id);
+          this.createDiary(recordFile.id);
         })
         .catch(error => {
           console.log(error);

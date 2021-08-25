@@ -77,13 +77,6 @@ const Content = props => {
         <Text style={styles.empathyText}>
           공감돼요 {diary_data[cnt_state].like.length}
         </Text>
-        <TouchableOpacity>
-          <Ionicons
-            name={'heart-outline'}
-            size={20}
-            style={{color: 'black', marginLeft: 5}}
-          />
-        </TouchableOpacity>
       </View>
       <TouchableOpacity
         style={styles.rightBtn}

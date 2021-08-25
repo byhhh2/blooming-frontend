@@ -16,7 +16,7 @@ let cnt = 0;
 const Content = props => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [like, setLike] = useState([]);
+  const [like, setLike] = useState(false);
 
   const [cnt_state, set_cnt] = useState(0);
 
@@ -36,14 +36,29 @@ const Content = props => {
         },
       })
       .then(response => {
-        console.log(response.data);
+        //console.log(response.data);
         set_diary_data(response.data.results);
       })
       .catch(error => {
         console.log(error);
       });
   };
-
+  const likeDiary = id => {
+    axios
+      .patch(`${axios.defaults.baseURL}/diary/${id}/like`, {
+        headers: {
+          Authorization: `JWT ${axios.defaults.headers.common['Authorization']}`,
+        },
+      })
+      .then(response => {
+        if (response === 'liked') {
+          console.log('done');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
   useEffect(() => {
     getListofDiary();
   }, [props]);
@@ -77,12 +92,24 @@ const Content = props => {
         <Text style={styles.empathyText}>
           공감돼요 {diary_data[cnt_state].like.length}
         </Text>
-        <TouchableOpacity>
-          <Ionicons
-            name={'heart-outline'}
-            size={20}
-            style={{color: 'black', marginLeft: 5}}
-          />
+        <TouchableOpacity
+          onPress={() => {
+            likeDiary(diary_data[cnt_state].id);
+            //setLike(!like);
+          }}>
+          {diary_data[cnt_state].like ? (
+            <Ionicons
+              name={'heart'}
+              size={20}
+              style={{color: 'black', marginLeft: 5}}
+            />
+          ) : (
+            <Ionicons
+              name={'heart-outline'}
+              size={20}
+              style={{color: 'black', marginLeft: 5}}
+            />
+          )}
         </TouchableOpacity>
       </View>
       <TouchableOpacity

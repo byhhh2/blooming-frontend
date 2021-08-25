@@ -74,13 +74,6 @@ const Content = props => {
       </View>
       <View style={styles.empathyView}>
         <Text style={styles.empathyText}>공감돼요 {52}</Text>
-        <TouchableOpacity>
-          <Ionicons
-            name={'heart-outline'}
-            size={20}
-            style={{color: 'black', marginLeft: 5}}
-          />
-        </TouchableOpacity>
       </View>
       <TouchableOpacity
         style={styles.rightBtn}
