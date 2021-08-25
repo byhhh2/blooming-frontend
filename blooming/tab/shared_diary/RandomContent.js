@@ -40,7 +40,6 @@ const Content = props => {
         if (response.data.results.length !== 0) {
           set_diary_data(response.data.results);
         }
-
       })
       .catch(error => {
         console.log(error);
@@ -162,6 +161,7 @@ const styles = StyleSheet.create({
   contentText: {
     fontFamily: 'GmarketSansTTFMedium',
     fontSize: 15,
+    lineHeight: 30,
   },
   empathyView: {
     alignSelf: 'flex-end',

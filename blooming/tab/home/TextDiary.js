@@ -272,6 +272,7 @@ const styles = StyleSheet.create({
   contentText: {
     fontSize: 16,
     fontFamily: 'GmarketSansTTFMedium',
+    lineHeight: 30,
   },
   btn: {
     flex: 1.2,

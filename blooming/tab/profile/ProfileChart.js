@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {
   LineChart,
   BarChart,
@@ -111,7 +111,7 @@ const ProfileChart = ({month}) => {
 
   const returnMindState = avg => {
     if (avg >= -1 && avg < 0.2) {
-      return '매우 나쁨';
+      return "누군가의 전문적인 도움이 필요해요 !\n\n지금 당신은 우울증 지수에서 가장 높은 단계에 \n\n속하는 '심각하게 우울한 상태'입니다. \n\n책읽기, 산책 등 일상적인 노력으로는 극복하지 \n\n못했다면 꼭 심리 상담으로 \n\n전문적인 도움을 받으시길 추천합니다.\n\n";
     } else if (avg >= 0.2 && avg < 0.4) {
       return '나쁨';
     } else if (avg >= 0.4 && avg < 0.6) {
@@ -139,7 +139,7 @@ const ProfileChart = ({month}) => {
           bezier
         />
       </View>
-      <View style={styles.stateDiagnosisView}>
+      <ScrollView style={styles.stateDiagnosisView}>
         <View style={styles.stateDiagnosisHeader}>
           <Text style={styles.headerText}>{month}월 감정 상태 진단</Text>
         </View>
@@ -150,7 +150,7 @@ const ProfileChart = ({month}) => {
               : returnMindState(avg_score)}
           </Text>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 };

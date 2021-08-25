@@ -104,7 +104,7 @@ class Writing extends Component {
                 multiline={true}
                 value={this.state.content}
                 onChangeText={text => this.setState({content: text})}
-                style={{fontFamily: 'GmarketSansTTFMedium'}}
+                style={{fontFamily: 'GmarketSansTTFMedium', lineHeight: 30}}
               />
             </ScrollView>
           </View>
